@@ -177,7 +177,7 @@ let degreesCon: { [key: number]: number } = {
 //sonar
 
 //----------------------------------
-//% color=#FF6B81
+//% color=#FF6B81 icon="\uf2db"
 namespace InwO {
     //สำหรับ servocon
     //% block"ContinuousServo $pinSV direction $direction"
