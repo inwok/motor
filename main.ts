@@ -175,10 +175,64 @@ let degreesCon: { [key: number]: number } = {
 }
 //----------------------------------
 //sonar
-
+enum PingUnit {
+    //% block="μs"
+    MicroSeconds,
+    //% block="cm"
+    Centimeters,
+    //% block="inches"
+    Inches
+}
+enum sonarPort {
+    //% block="E"
+    E,
+    //% block="F"
+    F,
+    //% block="G"
+    G,
+    //% block="H"
+    H,
+}
+let trigChanel: { [key: number]: DigitalPin } = {
+    [sonarPort.E]: DigitalPin.P16,
+    [sonarPort.F]: DigitalPin.P14,
+    [sonarPort.G]: DigitalPin.P2,
+    [sonarPort.H]: DigitalPin.P8,
+}
+let echoChanel: { [key: number]: DigitalPin } = {
+    [sonarPort.E]: DigitalPin.P15,
+    [sonarPort.F]: DigitalPin.P13,
+    [sonarPort.G]: DigitalPin.P12,
+    [sonarPort.H]: DigitalPin.P1,
+}
 //----------------------------------
 //% color=#FF6B81 icon="\uf2db"
+
 namespace InwO {
+    //sonar
+    //% block="sonar %channel unit %unit"
+    export function ping(channel: sonarPort, unit: PingUnit, maxCmDistance = 500): number {
+        let trig = trigChanel[channel];
+        let echo = echoChanel[channel];
+        // send pulse
+        pins.setPull(trig, PinPullMode.PullNone);
+        pins.digitalWritePin(trig, 0);
+        control.waitMicros(2);
+        pins.digitalWritePin(trig, 1);
+        control.waitMicros(10);
+        pins.digitalWritePin(trig, 0);
+
+        // read pulse
+        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58);
+
+        switch (unit) {
+            case PingUnit.Centimeters: return Math.idiv(d, 58);
+            case PingUnit.Inches: return Math.idiv(d, 148);
+            default: return d;
+        }
+    }
+
+
     //สำหรับ servocon
     //% block"ContinuousServo $pinSV direction $direction"
     //% direction.defl=90
@@ -219,8 +273,8 @@ namespace InwO {
     }
 
     //สำหรับ motor
-    
-    
+
+
     //% direction.defl=MotorShaftDirection.HIGH
     //% block="Stop Motor $channel"
     export function motorStop(channel: MotorChannel): void {
