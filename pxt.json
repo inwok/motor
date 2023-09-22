@@ -1,0 +1,15 @@
+{
+    "name": "InwO",
+    "version": "1.0.1",
+    "description": "Blocks provided by InwO。",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "README.md",
+        "main.ts",
+         
+    ],
+    "public": true
+}
