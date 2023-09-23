@@ -69,6 +69,29 @@ enum LEDShaftonoff {
 
 }
 //----------------------------------
+//button
+enum buttonChannel {
+    //% block="A"
+    A,
+    //% block="E"
+    E,
+    //% block="F"
+    F,
+    //% block="G"
+    G,
+    //% block="H"
+    H,
+}
+let buttonChannels: { [key: number]: DigitalPin } = {
+    [buttonChannel.A]: DigitalPin.P20,
+    [buttonChannel.E]: DigitalPin.P16,
+    [buttonChannel.F]: DigitalPin.P14,
+    [buttonChannel.G]: DigitalPin.P2,
+    [buttonChannel.H]: DigitalPin.P8,
+
+}
+//----------------------------------
+
 //อ่านค่าเซ็นเซอร์
 enum sensorChannel {
     //% block="P1"
@@ -97,6 +120,37 @@ let sensorChannels: { [key: number]: DigitalPin } = {
     [sensorChannel.P14]: DigitalPin.P14,
     [sensorChannel.P15]: DigitalPin.P15,
     [sensorChannel.P16]: DigitalPin.P16,
+}
+//----------------------------------
+
+//อ่านค่าเซ็นเซอร์
+enum blackChannel {
+    //% block="P1"
+    P1,
+    //% block="P8"
+    P8,
+    //% block="P12"
+    P12,
+    //% block="P2"
+    P2,
+    //% block="P13"
+    P13,
+    //% block="P14"
+    P14,
+    //% block="P15"
+    P15,
+    //% block="P16"
+    P16,
+}
+let blackChannels: { [key: number]: DigitalPin } = {
+    [blackChannel.P1]: DigitalPin.P1,
+    [blackChannel.P8]: DigitalPin.P8,
+    [blackChannel.P12]: DigitalPin.P12,
+    [blackChannel.P2]: DigitalPin.P2,
+    [blackChannel.P13]: DigitalPin.P13,
+    [blackChannel.P14]: DigitalPin.P14,
+    [blackChannel.P15]: DigitalPin.P15,
+    [blackChannel.P16]: DigitalPin.P16,
 }
 //----------------------------------
 //servo180
@@ -207,10 +261,72 @@ let echoChanel: { [key: number]: DigitalPin } = {
 }
 //----------------------------------
 //% color=#FF6B81 icon="\uf2db"
-
+//% groups="['Motor','Servo','Led', 'Read Sensor','Logic Sensor']"
 namespace InwO {
+        //สำหรับ motor
+
+
+    //% direction.defl=MotorShaftDirection.HIGH
+    //% block="Stop Motor $channel"
+    //% group="Motor"
+    export function motorStop(channel: MotorChannel): void {
+        let dirPin = motorChannels[channel];
+        let speedPin = motorSpeedPins[channel];
+
+        pins.digitalWritePin(dirPin, 0);
+        pins.analogWritePin(speedPin, 0);
+    }
+    //% block="Motor $channel direction $direction speed $speed"
+    //% speed.min=0 speed.max=255
+    //% direction.defl=MotorShaftDirection.HIGH
+    //% group="Motor"
+
+    export function motorControl(channel: MotorChannel, direction: MotorShaftDirection, speed: number): void {
+        let dirPin = motorChannels[channel];
+        let speedPin = motorSpeedPins[channel];
+
+        pins.digitalWritePin(dirPin, direction);
+        pins.analogWritePin(speedPin, pins.map(speed, 0, 255, 0, 1023));
+    }
+
+    //สำหรับ servocon
+    //% block"ContinuousServo $pinSV direction $direction"
+    //% direction.defl=90
+    //% group="Servo"
+    export function ContinuousServo(pinSV: servoChannel, direction: svconShaft): void {
+        let pinservo = servoChannels[pinSV];
+        let decon = degreesCon[direction];
+        pins.servoWritePin(pinservo, direction);
+
+    }
+
+    //สำหรับ servo180
+    //% block="servo180 $pinSmini degrees $degrees"
+    //% degrees.min=20 degrees.max=160
+    //% degrees.defl=90
+    //% group="Servo"
+    export function MiniServo(pinSmini: servoChannel, degrees: number): void {
+        let pinsmini= servoChannels[pinSmini];
+        pins.servoWritePin(pinsmini, degrees);
+
+    }
+
+
+    //สำหรับ Led
+    //% block="LED $leds Status $Status"
+    //% Status.defl=LEDShaftonoff.HIGH*
+    //% leds.defl=LEDChannel.C
+    //% group="Led"
+    export function led(leds: LEDChannel, Status: LEDShaftonoff): void {
+        let ledg = LEDChannels[leds];
+
+        pins.digitalWritePin(ledg, Status);
+
+    }
+
     //sonar
     //% block="sonar %channel unit %unit"
+    //% group="Read Sensor"
     //% unit.defl=PingUnit.Centimeters
     export function ping(channel: sonarPort, unit: PingUnit, maxCmDistance = 500): number {
         let trig = trigChanel[channel];
@@ -229,75 +345,53 @@ namespace InwO {
         switch (unit) {
             case PingUnit.Centimeters: return Math.idiv(d, 58);
             case PingUnit.Inches: return Math.idiv(d, 148);
-            default: return d ;
+            default: return d;
         }
     }
 
 
-    //สำหรับ servocon
-    //% block"ContinuousServo $pinSV direction $direction"
-    //% direction.defl=90
-    export function ContinuousServo(pinSV: servoChannel, direction: svconShaft): void {
-        let pinservo = servoChannels[pinSV];
-        let decon = degreesCon[direction];
-        pins.servoWritePin(pinservo, direction);
 
+    //สำหรับ Track Line
+    //% block="Track Line $pin Black Color"
+    //% group="Logic Sensor"
+    export function isButtonPressedII(pin: blackChannel): boolean {
+        let read = blackChannels[pin];
+        return pins.digitalReadPin(read) == 1;
+    }
+    //สำหรับ buttonpress
+    //% block="On button $pin pressed"
+    //% group="Logic Sensor"
+    export function isButtonPressed(pin: buttonChannel): boolean {
+        pins.setPull(buttonChannels[pin], PinPullMode.PullUp);
+        let read = buttonChannels[pin];
+        return pins.digitalReadPin(read) == 0;
     }
 
-    //สำหรับ servo180
-    //% block"servo180 $pinSV degrees $degrees"
-    //% degrees.min=20 degrees.max=160
-    //% degrees.defl=90
-    export function MiniServo(pinSV: servoChannel, direction: MotorShaftDirection, degrees: number): void {
-        let pinservo = servoChannels[pinSV];
-        pins.servoWritePin(pinservo, degrees);
 
+    //% block="Read button $pin "
+    //% group="Read Sensor"
+    export function Readbutton(pin: buttonChannel): number {
+        let read = buttonChannels[pin];
+        pins.setPull(buttonChannels[pin], PinPullMode.PullUp);
+        let reading = pins.digitalReadPin(read);
+        return (reading);
     }
-
     //สำหรับ sensor
     //% block"Sensor $pin "
+    //% group="Read Sensor"
     export function Sensor(pin: sensorChannel): number {
         let read = sensorChannels[pin];
         let reading = pins.digitalReadPin(read);
         return (reading);
     }
 
-    //สำหรับ Led
-    //% block="LED $leds Status $Status"
-    //% Status.defl=LEDShaftonoff.HIGH*
-    //% leds.defl=LEDChannel.C
-    export function led(leds: LEDChannel, Status: LEDShaftonoff): void {
-        let ledg = LEDChannels[leds];
 
-        pins.digitalWritePin(ledg, Status);
 
-    }
 
-    //สำหรับ motor
-    
-    
-    //% direction.defl=MotorShaftDirection.HIGH
-    //% block="Stop Motor $channel"
-    export function motorStop(channel: MotorChannel): void {
-        let dirPin = motorChannels[channel];
-        let speedPin = motorSpeedPins[channel];
-
-        pins.digitalWritePin(dirPin, 0);
-        pins.analogWritePin(speedPin, 0);
-    }
-    //% block="Motor $channel direction $direction speed $speed"
-    //% speed.min=0 speed.max=255
-    //% direction.defl=MotorShaftDirection.HIGH
-
-    export function motorControl(channel: MotorChannel, direction: MotorShaftDirection, speed: number): void {
-        let dirPin = motorChannels[channel];
-        let speedPin = motorSpeedPins[channel];
-
-        pins.digitalWritePin(dirPin, direction);
-        pins.analogWritePin(speedPin, pins.map(speed, 0, 255, 0, 1023));
-    }
 
 }
+
+
 
 
 
