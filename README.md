@@ -8,6 +8,7 @@ Blocks provided by InwO。
 * MIT
 
 ## Supported targets
+For microbit
 
 ```package
 InwO=github.com/inwok/motor
