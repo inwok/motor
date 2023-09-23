@@ -211,6 +211,7 @@ let echoChanel: { [key: number]: DigitalPin } = {
 namespace InwO {
     //sonar
     //% block="sonar %channel unit %unit"
+    //% unit.defl=PingUnit.Centimeters
     export function ping(channel: sonarPort, unit: PingUnit, maxCmDistance = 500): number {
         let trig = trigChanel[channel];
         let echo = echoChanel[channel];
@@ -228,7 +229,7 @@ namespace InwO {
         switch (unit) {
             case PingUnit.Centimeters: return Math.idiv(d, 58);
             case PingUnit.Inches: return Math.idiv(d, 148);
-            default: return d;
+            default: return d ;
         }
     }
 
@@ -273,8 +274,8 @@ namespace InwO {
     }
 
     //สำหรับ motor
-
-
+    
+    
     //% direction.defl=MotorShaftDirection.HIGH
     //% block="Stop Motor $channel"
     export function motorStop(channel: MotorChannel): void {
