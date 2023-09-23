@@ -260,7 +260,7 @@ let echoChanel: { [key: number]: DigitalPin } = {
     [sonarPort.H]: DigitalPin.P1,
 }
 //----------------------------------
-//% color=#FF6B81 icon="\uf2db"
+//% color=#001365 icon="\uf2db"
 //% groups="['Motor','Servo','Led', 'Read Sensor','Logic Sensor']"
 namespace InwO {
         //สำหรับ motor
@@ -288,6 +288,16 @@ namespace InwO {
         pins.digitalWritePin(dirPin, direction);
         pins.analogWritePin(speedPin, pins.map(speed, 0, 255, 0, 1023));
     }
+    //สำหรับ servo180
+    //% block"servo180 $pinSmini degrees $degrees"
+    //% degrees.min=20 degrees.max=160
+    //% degrees.defl=90
+    //% group="Servo"
+    export function MiniServo(pinSmini: servoChannel, degrees: number): void {
+        let pinsmini= servoChannels[pinSmini];
+        pins.servoWritePin(pinsmini, degrees);
+
+    }
 
     //สำหรับ servocon
     //% block"ContinuousServo $pinSV direction $direction"
@@ -300,16 +310,7 @@ namespace InwO {
 
     }
 
-    //สำหรับ servo180
-    //% block="servo180 $pinSmini degrees $degrees"
-    //% degrees.min=20 degrees.max=160
-    //% degrees.defl=90
-    //% group="Servo"
-    export function MiniServo(pinSmini: servoChannel, degrees: number): void {
-        let pinsmini= servoChannels[pinSmini];
-        pins.servoWritePin(pinsmini, degrees);
 
-    }
 
 
     //สำหรับ Led
