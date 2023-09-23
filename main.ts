@@ -1,4 +1,4 @@
-//Project Microbit Link เพิ่ม LCD
+//Project Microbit Link plus LCD
 //----------------------------------
 // บล็อกคำสั่งสำหรับควบคุมมอเตอร์
 enum MotorChannel {
@@ -262,7 +262,7 @@ let echoChanel: { [key: number]: DigitalPin } = {
 //----------------------------------
 //% color=#E7734B icon="\uf2db"
 //% groups="['Motor','Servo','Led', 'Read Sensor','Logic Sensor','LCD i2c']"
-namespace Inw_O_WTF {
+namespace InwO {
         //สำหรับ motor
 
 
