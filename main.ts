@@ -265,7 +265,7 @@ let echoChanel: { [key: number]: DigitalPin } = {
 namespace InwO {
         //สำหรับ motor
 
-
+    //% color=#E7734B
     //% direction.defl=MotorShaftDirection.HIGH
     //% block="Stop Motor $channel"
     //% group="Motor"
@@ -276,11 +276,12 @@ namespace InwO {
         pins.digitalWritePin(dirPin, 0);
         pins.analogWritePin(speedPin, 0);
     }
+    //% color=#E7734B
     //% block="Motor $channel direction $direction speed $speed"
     //% speed.min=0 speed.max=255
     //% direction.defl=MotorShaftDirection.HIGH
     //% group="Motor"
-
+    //% color=#E7734B
     export function motorControl(channel: MotorChannel, direction: MotorShaftDirection, speed: number): void {
         let dirPin = motorChannels[channel];
         let speedPin = motorSpeedPins[channel];
@@ -288,6 +289,7 @@ namespace InwO {
         pins.digitalWritePin(dirPin, direction);
         pins.analogWritePin(speedPin, pins.map(speed, 0, 255, 0, 1023));
     }
+    //% color=#E84E19
     //สำหรับ servo180
     //% block"servo180 $pinSmini degrees $degrees"
     //% degrees.min=20 degrees.max=160
@@ -298,7 +300,7 @@ namespace InwO {
         pins.servoWritePin(pinsmini, degrees);
 
     }
-
+    //% color=#E84E19
     //สำหรับ servocon
     //% block"ContinuousServo $pinSV direction $direction"
     //% direction.defl=90
@@ -311,11 +313,11 @@ namespace InwO {
 
 
 
-
+    //% color=#FACB09
     //สำหรับ Led
     //% block="LED $leds Status $Status"
     //% Status.defl=LEDShaftonoff.HIGH*
-    //% leds.defl=LEDChannel.C
+    //% leds.defl=LEDChannel.D
     //% group="Led"
     export function led(leds: LEDChannel, Status: LEDShaftonoff): void {
         let ledg = LEDChannels[leds];
@@ -323,7 +325,7 @@ namespace InwO {
         pins.digitalWritePin(ledg, Status);
 
     }
-
+    //% color=#000000
     //sonar
     //% block="sonar %channel unit %unit"
     //% group="Read Sensor"
@@ -350,7 +352,7 @@ namespace InwO {
     }
 
 
-
+    //% color=#3D3430
     //สำหรับ Track Line
     //% block="Track Line $pin Black Color"
     //% group="Logic Sensor"
@@ -358,6 +360,7 @@ namespace InwO {
         let read = blackChannels[pin];
         return pins.digitalReadPin(read) == 1;
     }
+    //% color=#3D3430    
     //สำหรับ buttonpress
     //% block="On button $pin pressed"
     //% group="Logic Sensor"
@@ -367,7 +370,7 @@ namespace InwO {
         return pins.digitalReadPin(read) == 0;
     }
 
-
+    //% color=#000000
     //% block="Read button $pin "
     //% group="Read Sensor"
     export function Readbutton(pin: buttonChannel): number {
@@ -376,6 +379,7 @@ namespace InwO {
         let reading = pins.digitalReadPin(read);
         return (reading);
     }
+    //% color=#000000    
     //สำหรับ sensor
     //% block"Sensor $pin "
     //% group="Read Sensor"
@@ -451,7 +455,7 @@ namespace InwO {
     }
     
     
-   
+    //% color=#045F14
     //% blockId="I2C_LCD1620_SET_ADDRESS" block="LCD (A) Address %addr"
     //% weight=100 blockGap=8
     //% parts=LCD1602_I2C trackArgs=0
@@ -473,7 +477,7 @@ namespace InwO {
         cmd(0x01)       // clear
     }
 
-    
+    //% color=#045F14
     //% blockId="I2C_LCD1620_SHOW_NUMBER" block="show number %n|at x %x|y %y"
     //% weight=90 blockGap=8
     //% x.min=0 x.max=15
@@ -485,7 +489,7 @@ namespace InwO {
         ShowString(s, x, y)
     }
 
-    
+    //% color=#045F14
     //% blockId="I2C_LCD1620_SHOW_STRING" block="show string %s|at x %x|y %y"
     //% weight=90 blockGap=8
     //% x.min=0 x.max=15
@@ -507,7 +511,7 @@ namespace InwO {
         }
     }
 
-    
+    //% color=#045F14
     //% blockId="I2C_LCD1620_ON" block="LCD on"
     //% weight=81 blockGap=8
     //% parts=LCD1602_I2C trackArgs=0
@@ -516,7 +520,7 @@ namespace InwO {
         cmd(0x0C)
     }
 
-    
+    //% color=#045F14
     //% blockId="I2C_LCD1620_OFF" block="LCD off"
     //% weight=80 blockGap=8
     //% parts=LCD1602_I2C trackArgs=0
@@ -525,7 +529,7 @@ namespace InwO {
         cmd(0x08)
     }
 
-    
+    //% color=#045F14
     //% blockId="I2C_LCD1620_CLEAR" block="clear"
     //% weight=85 blockGap=8
     //% parts=LCD1602_I2C trackArgs=0
@@ -534,7 +538,7 @@ namespace InwO {
         cmd(0x01)
     }
 
-    
+    //% color=#045F14
     //% blockId="I2C_LCD1620_BACKLIGHT_ON" block="light on"
     //% weight=71 blockGap=8
     //% parts=LCD1602_I2C trackArgs=0
@@ -544,7 +548,7 @@ namespace InwO {
         cmd(0)
     }
 
-    
+    //% color=#045F14
     //% blockId="I2C_LCD1620_BACKLIGHT_OFF" block="light off "
     //% weight=70 blockGap=8
     //% parts=LCD1602_I2C trackArgs=0
@@ -554,7 +558,7 @@ namespace InwO {
         cmd(0)
     }
 
-   
+    //% color=#045F14
     //% blockId="I2C_LCD1620_SHL" block="Shift Left"
     //% weight=61 blockGap=8
     //% parts=LCD1602_I2C trackArgs=0
@@ -563,7 +567,7 @@ namespace InwO {
         cmd(0x18)
     }
 
-    
+    //% color=#045F14
     //% blockId="I2C_LCD1620_SHR" block="Shift Right"
     //% weight=60 blockGap=8
     //% parts=LCD1602_I2C trackArgs=0
