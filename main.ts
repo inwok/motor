@@ -261,7 +261,7 @@ let echoChanel: { [key: number]: DigitalPin } = {
 }
 //----------------------------------
 //% color=#001365 icon="\uf2db"
-//% groups="['Motor','Servo','Led', 'Read Sensor','Logic Sensor']"
+//% groups="['Motor','Servo','Led', 'Read Sensor','Logic Sensor','LCD i2c']"
 namespace InwO {
         //สำหรับ motor
 
@@ -305,7 +305,6 @@ namespace InwO {
     //% group="Servo"
     export function ContinuousServo(pinSV: servoChannel, direction: svconShaft): void {
         let pinservo = servoChannels[pinSV];
-        let decon = degreesCon[direction];
         pins.servoWritePin(pinservo, direction);
 
     }
@@ -386,8 +385,13 @@ namespace InwO {
         return (reading);
     }
 
-
-
+    //LCD i2c
+    //% block="LCD coming soon!"
+    //% group="LCD i2c"
+     export function lcdcommingsoon(): void {
+        
+       
+    }
 
 
 }
