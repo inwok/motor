@@ -369,6 +369,18 @@ namespace InwO {
         let read = buttonChannels[pin];
         return pins.digitalReadPin(read) == 0;
     }
+    //สำหรับ motion PIR3pin
+    //% color=#3D3430   
+    //% blockId=octopus_pir weight=80 blockGap=30
+    //% block="motion detector at pin %p"    //% group="Logic Sensor"
+    export function PIR(p: sensorChannel): boolean {
+        let b = sensorChannels[p];
+        let a: number = pins.digitalReadPin(b);
+        if (a == 1) {
+            return true;
+        } else return false;
+    }
+
 
     //% color=#000000
     //% block="Read button $pin "
@@ -577,6 +589,7 @@ namespace InwO {
     }
 
 }
+
 
 
 
