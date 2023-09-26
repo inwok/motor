@@ -589,23 +589,7 @@ namespace InwO {
         cmd(0)
     }
 
-    //% color=#045F14
-    //% blockId="I2C_LCD1620_SHL" block="Shift Left"
-    //% weight=61 blockGap=8
-    //% parts=LCD1602_I2C trackArgs=0
-    //% group="LCD i2c"
-    export function shl(): void {
-        cmd(0x18)
-    }
 
-    //% color=#045F14
-    //% blockId="I2C_LCD1620_SHR" block="Shift Right"
-    //% weight=60 blockGap=8
-    //% parts=LCD1602_I2C trackArgs=0
-    //% group="LCD i2c"
-    export function shr(): void {
-        cmd(0x1C)
-    }
 
 }
 
