@@ -325,6 +325,25 @@ namespace InwO {
         pins.digitalWritePin(ledg, Status);
 
     }
+    //% color=#FACB09
+    //toggle led
+    //% blockId=LED block="LED %pin $ledstate"
+    //% ledstate.shadow="toggleOnOff"
+    //% expandableArgumentMode="toggle"
+    //% group="Led"
+    export function ledBrightness(pin: LEDChannel, ledstate: boolean): void {
+        if (ledstate) {
+            let pinled = LEDChannels[pin];
+            pins.digitalWritePin(pinled, 1);
+           
+        }
+        else {
+            let pinled = LEDChannels[pin];
+            pins.digitalWritePin(pinled, 0);
+           
+        }
+    }
+
     //% color=#000000
     //sonar
     //% block="sonar %channel unit %unit"
@@ -372,7 +391,7 @@ namespace InwO {
     //สำหรับ motion PIR3pin
     //% color=#3D3430   
     //% blockId=octopus_pir weight=80 blockGap=30
-    //% block="motion detector at pin %p"    //% group="Logic Sensor"
+    //% block="motion detector at pin %p"     //% group="Logic Sensor"
     export function PIR(p: sensorChannel): boolean {
         let b = sensorChannels[p];
         let a: number = pins.digitalReadPin(b);
