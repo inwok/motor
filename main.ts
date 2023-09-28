@@ -391,7 +391,7 @@ namespace InwO {
     //สำหรับ motion PIR3pin
     //% color=#3D3430   
     //% blockId=octopus_pir weight=80 blockGap=30
-    //% block="motion detector at pin %p"     //% group="Logic Sensor"
+    //% block="motion detector at pin %p"    //% group="Logic Sensor"
     export function PIR(p: sensorChannel): boolean {
         let b = sensorChannels[p];
         let a: number = pins.digitalReadPin(b);
@@ -402,7 +402,7 @@ namespace InwO {
 
 
     //% color=#000000
-    //% block="Read button $pin "
+    //% block="Read button $pin (0-1)"
     //% group="Read Sensor"
     export function Readbutton(pin: buttonChannel): number {
         let read = buttonChannels[pin];
@@ -412,7 +412,18 @@ namespace InwO {
     }
     //% color=#000000    
     //สำหรับ sensor
-    //% block"Sensor $pin "
+    //% block="Analog Sensor $pin (0-10) "
+    //% group="Read Sensor"
+    export function lightSensor(pin: sensorChannel): number {
+        let read = servoconChannels[pin];
+        let reading = pins.analogReadPin(read);
+        let mappin = pins.map(reading, 0, 1023, 0, 10); // แปลงค่าจาก 0-1023 เป็น 0-10
+        return Math.round(mappin);
+    }
+
+    //% color=#000000    
+    //สำหรับ sensor
+    //% block="Digital Sensor $pin (0-1)"
     //% group="Read Sensor"
     export function Sensor(pin: sensorChannel): number {
         let read = sensorChannels[pin];
