@@ -259,10 +259,19 @@ let echoChanel: { [key: number]: DigitalPin } = {
     [sonarPort.G]: DigitalPin.P12,
     [sonarPort.H]: DigitalPin.P1,
 }
+//MLX90614 IR thermometer
+
+enum MLX90614_TEMPERATURE_ORIGIN {
+    //% block="object"
+    OBJECT = 0x07,
+    //% block="ambient"
+    AMBIENT = 0x06,
+}
 //----------------------------------
 //% color=#E7734B icon="\uf2db"
-//% groups="['Motor','Servo','Led', 'Read Sensor','Logic Sensor','LCD i2c']"
+//% groups="['Motor','Servo','Led', 'Read Sensor','MLX90614 IR thermometer','Logic Sensor','I2C LCD 1602']"
 namespace InwO {
+
         //สำหรับ motor
 
     //% color=#E7734B
@@ -342,6 +351,24 @@ namespace InwO {
             pins.digitalWritePin(pinled, 0);
            
         }
+    }
+    //MLX90614_TEMPERATURE
+    let MLX90614_I2C_ADDR = 0x5A
+
+    function read_reg_uint16(reg: number): number {
+        pins.i2cWriteNumber(MLX90614_I2C_ADDR, reg, NumberFormat.UInt8LE, true);
+        return pins.i2cReadNumber(MLX90614_I2C_ADDR, NumberFormat.UInt16LE);
+    }
+
+    /**
+     * temperature
+     */
+    //% blockId="MLX90614_TEMPERATURE" block="%temperature_origin temperature (°C)"
+    //% weight=80 blockGap=8
+    //% group="MLX90614 IR thermometer"
+    export function temperature(temperature_origin: MLX90614_TEMPERATURE_ORIGIN): number {
+        let t = read_reg_uint16(temperature_origin);
+		return t * 0.02 - 273.15;
     }
 
     //% color=#000000
