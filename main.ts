@@ -285,6 +285,22 @@ namespace InwO {
         pins.digitalWritePin(dirPin, 0);
         pins.analogWritePin(speedPin, 0);
     }
+
+    //% color=#E7734B
+    //% block="Motor $channel direction $direction speed $speed"
+    //% speed.min=0 speed.max=255
+    //% direction.min=0 direction.max=1
+    
+    //% group="Motor"
+    //% color=#E7734B
+    export function motorControltest(channel: MotorChannel, direction: number, speed: number): void {
+        let dirPin = motorChannels[channel];
+        let speedPin = motorSpeedPins[channel];
+
+        pins.digitalWritePin(dirPin, direction);
+        pins.analogWritePin(speedPin, pins.map(speed, 0, 255, 0, 1023));
+    }
+
     //% color=#E7734B
     //% block="Motor $channel direction $direction speed $speed"
     //% speed.min=0 speed.max=255
@@ -630,10 +646,3 @@ namespace InwO {
 
 
 }
-
-
-
-
-
-
-
