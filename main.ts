@@ -336,7 +336,18 @@ namespace InwO {
 
     }
 
+//% color=#FACB09
+    //สำหรับ Led
+    //% block="LED $leds Status $Status"
+    //% Status.min=0 Status.max=1
+    //% leds.defl=LEDChannel.D
+    //% group="Led"
+    export function ledtest(leds: LEDChannel, Status: number): void {
+        let ledg = LEDChannels[leds];
 
+        pins.digitalWritePin(ledg, Status);
+
+    }
 
     //% color=#FACB09
     //สำหรับ Led
@@ -355,6 +366,7 @@ namespace InwO {
     //% blockId=LED block="LED %pin $ledstate"
     //% ledstate.shadow="toggleOnOff"
     //% expandableArgumentMode="toggle"
+    //% pin.defl=LEDChannel.D
     //% group="Led"
     export function ledBrightness(pin: LEDChannel, ledstate: boolean): void {
         if (ledstate) {
