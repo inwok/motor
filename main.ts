@@ -426,14 +426,23 @@ namespace InwO {
     }
 
 
-    //% color=#3D3430
+    //% color=#383838
     //สำหรับ Track Line
     //% block="Track Line $pin Black Color"
     //% group="Logic Sensor"
-    export function isButtonPressedII(pin: blackChannel): boolean {
+    export function isblack(pin: blackChannel): boolean {
         let read = blackChannels[pin];
         return pins.digitalReadPin(read) == 1;
     }
+    //% color=#636262
+    //สำหรับ Track Line
+    //% block="Track Line $pin Not Black"
+    //% group="Logic Sensor"
+    export function notblack(pin: blackChannel): boolean {
+        let read = blackChannels[pin];
+        return pins.digitalReadPin(read) == 0;
+    }
+
     //% color=#3D3430    
     //สำหรับ buttonpress
     //% block="On button $pin pressed"
