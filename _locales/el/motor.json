@@ -1,4 +1,4 @@
 {
-    “Motor|block": “motor”,
-    "gigoblockly.DDMmotor|block": "Control  Direction Pin %McontrolPin|Direction control  0-1 %McontrolValue|Speed foot position selection %MSpeedPin|Speed value selection 0~255 %MSpeedValue"
+    “InwO.motorControlblock": “motor”,
+	InwO.motorControl|block": "Control  Direction Pin %$channel|Direction control %direction|Speed value selection 0~255 %speed"
 }
