@@ -1,4 +1,4 @@
 {
-    “InwO.motorControl|block": “motor”,
+    “Motor|block": “motor”,
     "InwO.motorControl|block": "Control  Direction Pin %$channel|Direction control %direction|Speed value selection 0~255 %speed"
 }
